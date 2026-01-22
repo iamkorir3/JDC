@@ -1,33 +1,31 @@
-// src/util/DatabaseConnection.java
 package util;
 
 import model.DatabaseConfig;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseConnection {
     private static Connection connection = null;
 
     public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                // Load JDBC Driver
+        try {
+            // Always return a fresh connection or check if current is valid
+            if (connection == null || connection.isClosed()) {
+                // Load driver
                 Class.forName(DatabaseConfig.DRIVER);
 
-                // Establish Connection
+                // Create new connection
                 connection = DriverManager.getConnection(
-                        DatabaseConfig.URL,
+                        DatabaseConfig.URL + "?autoReconnect=true&useSSL=false",
                         DatabaseConfig.USERNAME,
                         DatabaseConfig.PASSWORD
                 );
-                System.out.println("Database connected successfully!");
 
-            } catch (ClassNotFoundException e) {
-                System.err.println("JDBC Driver not found: " + e.getMessage());
-            } catch (SQLException e) {
-                System.err.println("Database connection failed: " + e.getMessage());
+                System.out.println("✓ Database connection established");
             }
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver error: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Connection error: " + e.getMessage());
         }
         return connection;
     }
@@ -35,11 +33,23 @@ public class DatabaseConnection {
     public static void closeConnection() {
         if (connection != null) {
             try {
-                connection.close();
-                System.out.println("Database connection closed.");
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 System.err.println("Error closing connection: " + e.getMessage());
             }
+        }
+    }
+
+    // Test if connection is valid
+    public static boolean isConnectionValid() {
+        if (connection == null) return false;
+
+        try {
+            return !connection.isClosed() && connection.isValid(2);
+        } catch (SQLException e) {
+            return false;
         }
     }
 }
