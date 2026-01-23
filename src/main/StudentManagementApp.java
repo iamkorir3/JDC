@@ -12,15 +12,15 @@ public class StudentManagementApp {
     private static StudentDAO studentDAO = new StudentDAO();
 
     public static void main(String[] args) {
-        System.out.println("=================================");
+        System.out.println("================================");
         System.out.println("   STUDENT MANAGEMENT SYSTEM     ");
-        System.out.println("=================================");
+        System.out.println("================================");
 
         boolean running = true;
 
         while (running) {
             displayMenu();
-            int choice = getIntInput("Enter your choice: ");
+            int choice = getIntInput("Enter your choice from the menu: ");
 
             switch (choice) {
                 case 1:
