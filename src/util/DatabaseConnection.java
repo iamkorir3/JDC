@@ -8,12 +8,12 @@ public class DatabaseConnection {
 
     public static Connection getConnection() {
         try {
-            // Always return a fresh connection or check if current is valid
+         
             if (connection == null || connection.isClosed()) {
-                // Load driver
+               
                 Class.forName(DatabaseConfig.DRIVER);
 
-                // Create new connection
+           
                 connection = DriverManager.getConnection(
                         DatabaseConfig.URL + "?autoReconnect=true&useSSL=false",
                         DatabaseConfig.USERNAME,
