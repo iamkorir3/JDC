@@ -105,10 +105,10 @@ public class StudentManagementApp {
         List<Student> students = studentDAO.getAllStudents();
 
         if (students.isEmpty()) {
-            System.out.println("No students found!");
+            System.out.println("There are No students in the database now!");
         } else {
             System.out.println("Total Students: " + students.size());
-            System.out.println("----------------------------------------");
+            System.out.println("-----------------------------------");
             for (Student student : students) {
                 System.out.println(student);
             }
