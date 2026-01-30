@@ -3,6 +3,8 @@ package util;
 import model.DatabaseConfig;
 import java.sql.*;
 
+
+// connecting to database
 public class DatabaseConnection {
     private static Connection connection = null;
 
@@ -37,7 +39,7 @@ public class DatabaseConnection {
                     connection.close();
                 }
             } catch (SQLException e) {
-                System.err.println("Error closing connection: " + e.getMessage());
+                System.err.println("Error while closing connection: " + e.getMessage());
             }
         }
     }
