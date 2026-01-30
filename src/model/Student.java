@@ -3,6 +3,8 @@ package model;
 import java.sql.Date;
 
 public class Student {
+
+    //student atribute
     private int id;
     private String rollNumber;
     private String name;
